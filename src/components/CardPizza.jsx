@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
 
 const CardPizza = ({ name, price, ingredients, img }) => {
   const precio = price.toLocaleString();
@@ -13,16 +15,14 @@ const CardPizza = ({ name, price, ingredients, img }) => {
         </Card.Title>
         <hr />
         <Card.Text className="text-center text-body-secondary">
-          <strong>Ingredientes:</strong>
+          <strong>
+            {" "}
+            <FontAwesomeIcon icon={faPizzaSlice} style={{ color: "#74C0FC" }} />
+            {"  "}
+            Ingredientes:
+          </strong>
 
-          <p>
-            {ingredients.map((ingredient, index) => (
-              <span key={index}>
-                {ingredient}
-                {index < ingredients.length - 1 ? ", " : ""}
-              </span>
-            ))}
-          </p>
+          <p>{ingredients.join(", ")}</p>
         </Card.Text>
         <hr />
         <Card.Text className="text-center text-body-secondary">

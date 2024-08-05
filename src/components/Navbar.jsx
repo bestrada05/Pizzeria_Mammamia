@@ -8,10 +8,16 @@ const NavbarApp = () => {
   const token = false;
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      className="barranav"
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+    >
       <Container>
         <Navbar.Brand style={{ color: "#fff", textShadow: "0 0 10px #03bcf4" }}>
-          MAMMAMÍA!
+          MAMMAMÍA!{" "}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

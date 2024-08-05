@@ -25,6 +25,7 @@
   line-height: 0.7em;
   outline: none;
   animation: animate 5s linear infinite;
+  object-fit: contain;
 }
 @keyframes animate {
   0%,

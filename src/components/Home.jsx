@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home">
       <Header></Header>
-      <Container className="m-4 d-flex ">
+      <Container className=" d-flex ">
         <Row className="g-4">
           <Col sm={12} md={6} lg={4}>
             <CardPizza
