@@ -5,7 +5,6 @@
 
 .home {
   background-color: #212529;
-  width: 100vw;
 }
 
 .headerContainer {
@@ -21,7 +20,6 @@
   letter-spacing: 15px;
   color: #0e3742;
   text-transform: uppercase;
-  width: 100%;
   text-align: center;
   -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
   line-height: 0.7em;

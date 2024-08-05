@@ -8,7 +8,7 @@ const CardPizza = ({ name, price, ingredients, img }) => {
     <Card className="m-4 " style={{ minHeight: "550px" }}>
       <Card.Img variant="top" src={img} />
       <Card.Body>
-        <Card.Title className="text-body-secondary">
+        <Card.Title className="text-body-secondary nombrePizza">
           <h4>{name}</h4>
         </Card.Title>
         <hr />
