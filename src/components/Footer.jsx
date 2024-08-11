@@ -7,7 +7,7 @@ function Footer() {
     textShadow: "0 0 10px #e1e6f0",
   };
   return (
-    <Container fluid className="p-3 mb-2 text-center">
+    <Container fluid className="p-3 mb-2 text-center sticky-bottom">
       <h5 style={estilo}>
         {" "}
         © 2021-Pizzería MammaMia!-Todos los derechos reservados
