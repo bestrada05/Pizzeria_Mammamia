@@ -137,15 +137,8 @@
   border-radius: 10px;
 }
 
-.msjEnvio {
-  color: whitesmoke;
-  padding: 1rem;
-  background: linear-gradient(45deg, #9cd891, #0c9f04);
-  border-radius: 10px;
-}
-
 .login {
-  width: 100dvw;
+  width: 100%;
   background-image: url("/src/assets/background.png");
   background-size: cover;
   min-height: 700px;
@@ -154,8 +147,7 @@
 
 .loginBox {
   margin-top: 2rem;
-  width: 30dvw;
-
+  width: 30vw;
   padding: 2rem;
   color: white;
   display: flex;
@@ -163,4 +155,10 @@
   align-items: center;
   border: 2px solid white;
   backdrop-filter: blur(10px);
+}
+
+@media (max-width: 560px) {
+  .loginBox {
+    width: 90vw;
+  }
 }
