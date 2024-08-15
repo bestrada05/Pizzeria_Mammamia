@@ -11,9 +11,9 @@ function App() {
   return (
     <>
       <NavbarApp />
-      <FormularioRegistro />
+      {/*<FormularioRegistro />*/}
       {/*  <FormularioLogin />*/}
-      {/*<Home />*/}
+      <Home />
       <Footer />
     </>
   );

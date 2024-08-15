@@ -166,7 +166,7 @@ const FormularioRegistro = () => {
           {envio
             ? Toast.fire({
                 icon: "success",
-                title: "Login exitoso",
+                title: "Registro exitoso",
                 color: "white",
                 background: "#212529",
               })

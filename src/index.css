@@ -162,3 +162,7 @@
     width: 90vw;
   }
 }
+
+ul {
+  list-style: none;
+}

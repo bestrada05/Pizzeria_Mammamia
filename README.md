@@ -7,3 +7,7 @@ Se construye página principal
 # React - Hito 2
 
 Se construyen los formularios de Registro y de Login
+
+# React - Hito 3
+
+Renderización dinámica de componentes
