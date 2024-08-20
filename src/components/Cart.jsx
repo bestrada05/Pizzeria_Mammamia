@@ -13,14 +13,12 @@ const Cart2 = () => {
   const addToCart = (pizza) => {
     const existingPizza = cart.find((item) => item.id === pizza.id);
     if (existingPizza) {
-      // Si la pizza ya existe en el carrito, aumentar la cantidad
       setCart((prevCart) =>
         prevCart.map((item) =>
           item.id === pizza.id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
     } else {
-      // Si no existe, agregar la pizza con cantidad 1
       setCart((prevCart) => [...prevCart, { ...pizza, quantity: 1 }]);
     }
   };

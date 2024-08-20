@@ -3,7 +3,7 @@ import NavbarApp from "./components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 
-import Cart2 from "./components/Cart2";
+import Cart from "./components/Cart";
 import FormularioRegistro from "./components/FormularioRegistro";
 import "./App.css";
 import FormularioLogin from "./components/FormularioLogin";
@@ -16,7 +16,7 @@ function App() {
       {/*  <FormularioLogin />*/}
       {/* <Home /> */}
 
-      <Cart2 />
+      <Cart />
       <Footer />
     </>
   );
