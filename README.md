@@ -11,3 +11,7 @@ Se construyen los formularios de Registro y de Login
 # React - Hito 3
 
 Renderización dinámica de componentes
+
+# React - Hito 3
+
+Consumo de APIs con React
