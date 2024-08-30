@@ -14,7 +14,7 @@ const Home = () => {
 
   const pizzasApi = async () => {
     try {
-      const url = "http://localhost:4000/api/pizzas";
+      const url = "http://localhost:5000/api/pizzas";
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
