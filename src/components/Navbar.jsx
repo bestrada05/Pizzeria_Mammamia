@@ -2,6 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 
 const NavbarApp = () => {
   const total = 25000;
@@ -22,35 +23,48 @@ const NavbarApp = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className="btn btn-outline-secondary ms-3 " href="#">
+            <Link
+              to="/Pizzeria_Mammamia/"
+              className="btn btn-outline-secondary ms-3 "
+            >
               🍕 HOME
-            </Nav.Link>
+            </Link>
+
             {token ? (
-              <Nav.Link className="btn btn-outline-secondary ms-3 " href="#">
+              <Link to="/Logout" className="btn btn-outline-secondary ms-3 ">
                 🔒 Logout
-              </Nav.Link>
+              </Link>
             ) : (
-              <Nav.Link className="btn btn-outline-secondary ms-3 " href="#">
+              <Link
+                to="/Pizzeria_Mammamia/Login"
+                className="btn btn-outline-secondary ms-3 "
+              >
                 🔐 Login
-              </Nav.Link>
+              </Link>
             )}
             {token ? (
-              <Nav.Link className="btn btn-outline-secondary ms-3 " href="#">
+              <Link
+                to="/Pizzeria_Mammamia/Profile"
+                className="btn btn-outline-secondary ms-3 "
+              >
                 🔓 Profile
-              </Nav.Link>
+              </Link>
             ) : (
-              <Nav.Link className="btn btn-outline-secondary ms-3 " href="#">
+              <Link
+                to="/Pizzeria_Mammamia/Register"
+                className="btn btn-outline-secondary ms-3 "
+              >
                 🔐 Register
-              </Nav.Link>
+              </Link>
             )}
           </Nav>
           <Nav>
-            <Nav.Link
+            <Link
+              to="/Pizzeria_Mammamia/Carrito"
               className=" btn btn-outline-secondary text-white linkNav"
-              href="#"
             >
               🛒 Total: $ {total.toLocaleString()}
-            </Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

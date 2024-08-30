@@ -14,7 +14,7 @@ const Pizza = () => {
   }, []);
 
   const pizzaApi = async () => {
-    const url = "http://localhost:5000/api/pizzas/p001";
+    const url = "http://localhost:4000/api/pizzas/p001";
     try {
       const response = await fetch(url);
       if (!response.ok) {

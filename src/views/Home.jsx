@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import CardPizza from "./CardPizza";
-import { Container, Row, Col } from "react-bootstrap";
+import Header from "../components/Header";
+import CardPizza from "../components/CardPizza";
+import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     pizzasApi();
@@ -13,7 +14,7 @@ const Home = () => {
 
   const pizzasApi = async () => {
     try {
-      const url = "http://localhost:5000/api/pizzas";
+      const url = "http://localhost:4000/api/pizzas";
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -21,6 +22,7 @@ const Home = () => {
       const data = await response.json();
       setPizzas(data);
     } catch (error) {
+      setError("Failed to fetch pizzas: " + error.message);
       console.error("Failed to fetch pizzas:", error);
     } finally {
       setLoading(false);
