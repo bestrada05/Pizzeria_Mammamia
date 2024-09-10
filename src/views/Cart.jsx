@@ -1,27 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col, Offcanvas } from "react-bootstrap";
-import { data } from "../components/pizzas";
+import { CartContext } from "../Context/CartContext";
 
-const Cart2 = () => {
-  const [pizzas, setPizzas] = useState(data);
-  const [cart, setCart] = useState([]);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const addToCart = (pizza) => {
-    const existingPizza = cart.find((item) => item.id === pizza.id);
-    if (existingPizza) {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item.id === pizza.id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else {
-      setCart((prevCart) => [...prevCart, { ...pizza, quantity: 1 }]);
-    }
-  };
+const Cart = () => {
+  const {
+    pizzas,
+    setPizzas,
+    cart,
+    setCart,
+    show,
+    handleClose,
+    handleShow,
+    handleClick,
+  } = useContext(CartContext);
 
   const removeFromCart = (pizzaId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== pizzaId));
@@ -37,23 +28,26 @@ const Cart2 = () => {
 
   const decreaseQuantity = (pizzaId) => {
     setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === pizzaId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+      prevCart
+        .map((item) => {
+          if (item.id === pizzaId) {
+            if (item.quantity === 1) {
+              removeFromCart(pizzaId);
+              return null;
+            } else {
+              return { ...item, quantity: item.quantity - 1 };
+            }
+          }
+          return item;
+        })
+        .filter((item) => item !== null)
     );
   };
-
   const calculateTotal = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
 
-  const handleClick = (pizza) => {
-    addToCart(pizza);
-    handleShow();
-  };
-
+  console.log(pizzas);
   return (
     <div className="cart pb-2">
       <br />
@@ -100,7 +94,7 @@ const Cart2 = () => {
       </Container>
 
       <Offcanvas
-        className="bg-dark text-white d-flex flex-column justify-content-center "
+        className="bg-dark text-white d-flex flex-column justify-content-center"
         show={show}
         onHide={handleClose}
       >
@@ -117,48 +111,55 @@ const Cart2 = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Container className="d-flex flex-column justify-content-center align-items-center">
-            {cart.map((pizza) => (
-              <Row
-                key={pizza.id}
-                className="mb-3 border p-3 rounded d-flex justify-content-between align-items-center"
-              >
-                <Col>
-                  <img
-                    src={pizza.img}
-                    alt={`Imagen de Pizza ${pizza.name}`}
-                    className="pizza-image"
-                  />
-                  <div className="d-flex flex-column justify-content-center align-items-center text-center">
-                    <h6>
-                      {pizza.name} {""} ${pizza.price.toLocaleString()}
-                    </h6>
-                  </div>
-                </Col>
+            {cart.length > 0 ? (
+              cart.map((pizza) => (
+                <Row
+                  key={pizza.id}
+                  className="mb-3 border p-3 rounded d-flex justify-content-between align-items-center"
+                >
+                  <Col>
+                    <img
+                      src={pizza.img}
+                      alt={`Imagen de Pizza ${pizza.name}`}
+                      className="pizza-image"
+                    />
+                    <div className="d-flex flex-column justify-content-center align-items-center text-center">
+                      <h6>
+                        {pizza.name} ${pizza.price.toLocaleString()}
+                      </h6>
+                    </div>
+                  </Col>
 
-                <Col className="d-flex flex-column justify-content-center align-items-center">
-                  <div>
+                  <Col className="d-flex flex-column justify-content-center align-items-center">
+                    <div>
+                      <button
+                        className="btnCarrito"
+                        onClick={() => increaseQuantity(pizza.id)}
+                      >
+                        ➕
+                      </button>
+                      <span className="mx-2">
+                        {pizza.quantity} {/* Mostrar cantidad */}
+                      </span>
+                      <button
+                        className="btnCarrito"
+                        onClick={() => decreaseQuantity(pizza.id)}
+                      >
+                        ➖
+                      </button>
+                    </div>
                     <button
                       className="btnCarrito"
-                      onClick={() => increaseQuantity(pizza.id)}
+                      onClick={() => removeFromCart(pizza.id)}
                     >
-                      ➕
+                      Quitar
                     </button>
-                    <button
-                      className="btnCarrito"
-                      onClick={() => decreaseQuantity(pizza.id)}
-                    >
-                      ➖
-                    </button>
-                  </div>
-                  <button
-                    className="btnCarrito"
-                    onClick={() => removeFromCart(pizza.id)}
-                  >
-                    Quitar
-                  </button>
-                </Col>
-              </Row>
-            ))}
+                  </Col>
+                </Row>
+              ))
+            ) : (
+              <h6>El carrito está vacío.</h6>
+            )}
           </Container>
         </Offcanvas.Body>
         <h4
@@ -176,4 +177,4 @@ const Cart2 = () => {
   );
 };
 
-export default Cart2;
+export default Cart;

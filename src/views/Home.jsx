@@ -1,41 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import CardPizza from "../components/CardPizza";
+import { CartContext } from "../Context/CartContext";
 import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    pizzasApi();
-  }, []);
-
-  const pizzasApi = async () => {
-    try {
-      const url = "http://localhost:5000/api/pizzas";
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setPizzas(data);
-    } catch (error) {
-      setError("Failed to fetch pizzas: " + error.message);
-      console.error("Failed to fetch pizzas:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <Spinner animation="border" />;
-  }
-
-  if (error) {
-    return <Alert variant="danger">{error}</Alert>;
-  }
+  const { pizzas, setPizzas, loading, setLoading, error, setError, pizzasApi } =
+    useContext(CartContext);
 
   return (
     <div className="home">
@@ -46,6 +17,7 @@ const Home = () => {
             return (
               <Col sm={12} md={6} lg={4} key={pizza.id}>
                 <CardPizza
+                  pizza={pizza}
                   name={pizza.name}
                   price={pizza.price}
                   ingredients={
