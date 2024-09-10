@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import CardPizza from "../components/CardPizza";
 import { CartContext } from "../Context/CartContext";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Home = () => {
-  const { pizzas, setPizzas, loading, setLoading, error, setError, pizzasApi } =
-    useContext(CartContext);
+  const { pizzas } = useContext(CartContext);
 
   return (
     <div className="home">

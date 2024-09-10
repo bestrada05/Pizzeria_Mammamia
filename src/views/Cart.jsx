@@ -3,16 +3,8 @@ import { Container, Row, Col, Offcanvas } from "react-bootstrap";
 import { CartContext } from "../Context/CartContext";
 
 const Cart = () => {
-  const {
-    pizzas,
-    setPizzas,
-    cart,
-    setCart,
-    show,
-    handleClose,
-    handleShow,
-    handleClick,
-  } = useContext(CartContext);
+  const { pizzas, cart, setCart, show, handleClose, handleShow, handleClick } =
+    useContext(CartContext);
 
   const removeFromCart = (pizzaId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== pizzaId));
@@ -47,7 +39,6 @@ const Cart = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
 
-  console.log(pizzas);
   return (
     <div className="cart pb-2">
       <br />
