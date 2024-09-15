@@ -3,16 +3,23 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { CartContext } from "../Context/CartContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { TokenContext } from "../Context/TokenContext";
 
 const NavbarApp = () => {
   const { cart } = useContext(CartContext);
+  const { user } = useContext(TokenContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUser(false);
+    navigate("/Pizzeria_Mammamia/");
+  };
 
   const setActiveClass = ({ isActive }) => (isActive ? "active" : "");
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  const token = false;
 
   return (
     <Navbar
@@ -37,8 +44,12 @@ const NavbarApp = () => {
               🍕 Home
             </NavLink>
 
-            {token ? (
-              <NavLink to="/Logout" className={`navLink  ${setActiveClass}`}>
+            {user ? (
+              <NavLink
+                to="/Pizzeria_Mammamia/Logout"
+                className={`navLink  ${setActiveClass}`}
+                onClick={handleLogout}
+              >
                 🔒 Logout
               </NavLink>
             ) : (
@@ -49,7 +60,7 @@ const NavbarApp = () => {
                 🔐 Login
               </NavLink>
             )}
-            {token ? (
+            {user ? (
               <NavLink
                 to="/Pizzeria_Mammamia/Profile"
                 className={`navLink  ${setActiveClass}`}

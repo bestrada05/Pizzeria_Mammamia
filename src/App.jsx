@@ -8,12 +8,17 @@ import FormularioLogin from "./views/FormularioLogin";
 import Profile from "./views/Profile";
 import Pizza from "./views/Pizza";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import CartProvider from "./Context/CartContext";
 import PizzaProvider from "./Context/PizzaContext";
+import TokenProvider, { TokenContext } from "./Context/TokenContext";
+import { useContext } from "react";
+import Logout from "./views/Logout";
 
 function App() {
+  const { user } = useContext(TokenContext);
+
   return (
     <>
       <CartProvider>
@@ -30,7 +35,13 @@ function App() {
               path="/Pizzeria_Mammamia/Login"
               element={<FormularioLogin />}
             />
-            <Route path="/Pizzeria_Mammamia/Profile" element={<Profile />} />
+            <Route
+              path="/Pizzeria_Mammamia/Profile"
+              element={
+                user ? <Profile /> : <Navigate to="/Pizzeria_Mammamia/Login" />
+              }
+            />
+            <Route path="/Pizzeria_Mammamia/Logout" element={<Logout />} />
 
             <Route path="/Pizzeria_Mammamia/Carrito" element={<Cart />} />
             <Route path="/Pizzeria_Mammamia/pizza/:id" element={<Pizza />} />

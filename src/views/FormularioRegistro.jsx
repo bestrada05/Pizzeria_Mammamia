@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Button,
@@ -9,13 +9,21 @@ import {
 
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { TokenContext } from "../Context/TokenContext";
 
 const FormularioRegistro = () => {
-  const [mail, setMail] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [validacion, setValidacion] = useState("");
-  const [checkboxChecked, setCheckboxChecked] = useState(false);
-  const [envio, setEnvio] = useState(false);
+  const {
+    mail,
+    setMail,
+    contrasena,
+    setContrasena,
+    envio,
+    setEnvio,
+    validacion,
+    setValidacion,
+    checkboxChecked,
+    setCheckboxChecked,
+  } = useContext(TokenContext);
 
   const Toast = Swal.mixin({
     toast: true,

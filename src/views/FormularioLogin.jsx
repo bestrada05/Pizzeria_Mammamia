@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { TokenContext } from "../Context/TokenContext";
+import { useNavigate } from "react-router-dom";
 
 const FormularioLogin = () => {
-  const [mail, setMail] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [envio, setEnvio] = useState(false);
-  const [error, setError] = useState("");
+  const {
+    mail,
+    setMail,
+    contrasena,
+    setContrasena,
+    envio,
+    setEnvio,
+    error,
+    setError,
+    user,
+    setUser,
+  } = useContext(TokenContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -31,29 +43,48 @@ const FormularioLogin = () => {
   });
 
   const validarInput = (e) => {
-    e.preventDefault();
     setError("");
 
     if (mail === "" || contrasena === "") {
       setError("Hay campos vacíos en el formulario");
-      return;
+      return false;
     }
     if (contrasena.length <= 6) {
       setError("La contraseña debe tener mínimo 6 caracteres");
-      return;
+      return false;
     }
 
-    setEnvio(true);
-    setMail("");
-    setContrasena("");
+    return true;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validarInput()) {
+      if (mail === "juanito@gmail.com" && contrasena === "12345678") {
+        setUser(true);
+        setEnvio(true);
+        Toast.fire({
+          icon: "success",
+          title: "Login exitoso",
+          color: "white",
+          background: "#212529",
+        });
+        navigate("/Pizzeria_Mammamia/");
+      } else {
+        setUser(false);
+        setError("Credenciales incorrectas");
+      }
+      setMail("");
+      setContrasena("");
+    }
+  };
   return (
     <div className="login">
       <Container className="loginBox">
         <Form
           className="d-flex flex-column align-items-center"
-          onSubmit={validarInput}
+          onSubmit={handleSubmit}
         >
           <h4 style={{ color: "white", textShadow: "0 0 10px #03bcf4" }}>
             Ingresa a MAMMAMÍA 🙌🏼!
@@ -84,14 +115,6 @@ const FormularioLogin = () => {
               {error}
             </p>
           )}
-          {envio
-            ? Toast.fire({
-                icon: "success",
-                title: "Login exitoso",
-                color: "white",
-                background: "#212529",
-              })
-            : null}
 
           <Button variant="primary" type="submit">
             Ingresar

@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-import { Container, Row, Col, Offcanvas } from "react-bootstrap";
+import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import { CartContext } from "../Context/CartContext";
+import { TokenContext } from "../Context/TokenContext";
 
 const Cart = () => {
   const { pizzas, cart, setCart, show, handleClose, handleShow, handleClick } =
     useContext(CartContext);
+
+  const { user } = useContext(TokenContext);
 
   const removeFromCart = (pizzaId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== pizzaId));
@@ -41,6 +44,9 @@ const Cart = () => {
 
   return (
     <div className="cart pb-2">
+      <Button onClick={handleShow}>
+        Mostrar Carrito <br /> 🛒
+      </Button>
       <br />
       <Container className=" cartBox d-flex flex-column justify-content-center align-items-center">
         <h3
@@ -129,9 +135,7 @@ const Cart = () => {
                       >
                         ➕
                       </button>
-                      <span className="mx-2">
-                        {pizza.quantity} {/* Mostrar cantidad */}
-                      </span>
+                      <span className="mx-2">{pizza.quantity}</span>
                       <button
                         className="btnCarrito"
                         onClick={() => decreaseQuantity(pizza.id)}
@@ -163,6 +167,10 @@ const Cart = () => {
         >
           🍕 Total : ${calculateTotal().toLocaleString()}
         </h4>
+        <Button variant="outline-secondary" className={user ? "" : "disabled"}>
+          {" "}
+          💳 Pagar{" "}
+        </Button>
       </Offcanvas>
     </div>
   );
