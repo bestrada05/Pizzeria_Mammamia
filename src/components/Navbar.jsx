@@ -3,10 +3,12 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { CartContext } from "../Context/CartContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const NavbarApp = () => {
   const { cart } = useContext(CartContext);
+
+  const setActiveClass = ({ isActive }) => (isActive ? "active" : "");
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -27,48 +29,49 @@ const NavbarApp = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link
+            <NavLink
               to="/Pizzeria_Mammamia/"
-              className="btn btn-outline-secondary ms-3 "
+              className={`navLink  ${setActiveClass}`}
+              end
             >
-              🍕 HOME
-            </Link>
+              🍕 Home
+            </NavLink>
 
             {token ? (
-              <Link to="/Logout" className="btn btn-outline-secondary ms-3 ">
+              <NavLink to="/Logout" className={`navLink  ${setActiveClass}`}>
                 🔒 Logout
-              </Link>
+              </NavLink>
             ) : (
-              <Link
+              <NavLink
                 to="/Pizzeria_Mammamia/Login"
-                className="btn btn-outline-secondary ms-3 "
+                className={`navLink  ${setActiveClass}`}
               >
                 🔐 Login
-              </Link>
+              </NavLink>
             )}
             {token ? (
-              <Link
+              <NavLink
                 to="/Pizzeria_Mammamia/Profile"
-                className="btn btn-outline-secondary ms-3 "
+                className={`navLink  ${setActiveClass}`}
               >
                 🔓 Profile
-              </Link>
+              </NavLink>
             ) : (
-              <Link
+              <NavLink
                 to="/Pizzeria_Mammamia/Register"
-                className="btn btn-outline-secondary ms-3 "
+                className={`navLink  ${setActiveClass}`}
               >
                 🔐 Register
-              </Link>
+              </NavLink>
             )}
           </Nav>
           <Nav>
-            <Link
+            <NavLink
               to="/Pizzeria_Mammamia/Carrito"
-              className=" btn btn-outline-secondary text-white linkNav"
+              className={`navLink  ${setActiveClass}`}
             >
               🛒 Total: $ {total.toLocaleString()}
-            </Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>

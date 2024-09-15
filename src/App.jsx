@@ -11,28 +11,33 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import CartProvider from "./Context/CartContext";
+import PizzaProvider from "./Context/PizzaContext";
 
 function App() {
   return (
     <>
       <CartProvider>
-        <NavbarApp />
+        <PizzaProvider>
+          <NavbarApp />
 
-        <Routes>
-          <Route path="/Pizzeria_Mammamia/" element={<Home />} />
-          <Route
-            path="/Pizzeria_Mammamia/Register"
-            element={<FormularioRegistro />}
-          />
-          <Route
-            path="/Pizzeria_Mammamia/Login"
-            element={<FormularioLogin />}
-          />
-          <Route path="/Pizzeria_Mammamia/Profile" element={<Profile />} />
-          <Route path="/Pizzeria_Mammamia/Carrito" element={<Cart />} />
-          <Route path="/Pizzeria_Mammamia/pizza/p001" element={<Pizza />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+          <Routes>
+            <Route path="/Pizzeria_Mammamia/" element={<Home />} />
+            <Route
+              path="/Pizzeria_Mammamia/Register"
+              element={<FormularioRegistro />}
+            />
+            <Route
+              path="/Pizzeria_Mammamia/Login"
+              element={<FormularioLogin />}
+            />
+            <Route path="/Pizzeria_Mammamia/Profile" element={<Profile />} />
+
+            <Route path="/Pizzeria_Mammamia/Carrito" element={<Cart />} />
+            <Route path="/Pizzeria_Mammamia/pizza/:id" element={<Pizza />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PizzaProvider>
       </CartProvider>
       <Footer />
     </>

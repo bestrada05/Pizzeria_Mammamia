@@ -10,6 +10,10 @@ const CardPizza = ({ name, price, ingredients, img, pizza }) => {
   const { addToCart, handleShow } = useContext(CartContext);
   const navigate = useNavigate();
 
+  const verDetalle = () => {
+    navigate(`/Pizzeria_Mammamia/pizza/${pizza.id}`);
+  };
+
   const handleClick = (pizza) => {
     addToCart(pizza);
     handleShow(true);
@@ -22,7 +26,7 @@ const CardPizza = ({ name, price, ingredients, img, pizza }) => {
         <Card.Img variant="top" src={img} alt={`Imagen de Pizza ${name}`} />
         <Card.Body>
           <Card.Title className="text-body-secondary nombrePizza">
-            <h4>{name}</h4>
+            <h4>{name.charAt(0).toUpperCase() + name.slice(1)}</h4>
           </Card.Title>
           <hr />
           <Card.Text className="text-center text-body-secondary">
@@ -40,7 +44,9 @@ const CardPizza = ({ name, price, ingredients, img, pizza }) => {
             <strong>Precio: </strong> ${price}
           </Card.Text>
           <div className="d-flex justify-content-around">
-            <Button variant="outline-secondary btn">Ver más</Button>
+            <Button variant="outline-secondary btn" onClick={verDetalle}>
+              Ver más
+            </Button>
             <Button
               variant="outline-secondary"
               onClick={() => handleClick(pizza)}

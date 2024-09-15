@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
+import React, { useState, useEffect, useContext } from "react";
+import { Spinner, Alert, Button, Card } from "react-bootstrap";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { PizzaContext } from "../Context/PizzaContext";
+import { CartContext } from "../Context/CartContext";
 
 const Pizza = () => {
-  const [pizza, setPizza] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { pizza, setPizza, loading, setLoading, error, setError } =
+    useContext(PizzaContext);
+  const { addToCart, handleShow } = useContext(CartContext);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    pizzaApi();
-  }, []);
-
-  const pizzaApi = async () => {
-    const url = "http://localhost:5000/api/pizzas/p001";
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+    async function pizzaApi() {
+      const url = `http://localhost:4000/api/pizzas/${id}`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPizza(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      setPizza(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    if (id) pizzaApi();
+  }, [id]);
 
   if (loading) {
     return <Spinner animation="border" />;
@@ -36,6 +39,12 @@ const Pizza = () => {
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
   }
+
+  const handleClick = (pizza) => {
+    addToCart(pizza);
+    handleShow(true);
+    navigate("/Pizzeria_Mammamia/Carrito");
+  };
 
   return (
     <>
