@@ -7,13 +7,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { TokenContext } from "../Context/TokenContext";
 
 const NavbarApp = () => {
-  const { cart } = useContext(CartContext);
-  const { user } = useContext(TokenContext);
+  const { cart, setCart } = useContext(CartContext);
+  const { user, setUser } = useContext(TokenContext);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setUser(false);
+    setUser(null);
+    localStorage.removeItem("token");
+    setCart([]);
     navigate("/Pizzeria_Mammamia/");
   };
 

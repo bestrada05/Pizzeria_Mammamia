@@ -1,13 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Col, Offcanvas, Button } from "react-bootstrap";
 import { CartContext } from "../Context/CartContext";
 import { TokenContext } from "../Context/TokenContext";
+import Swal from "sweetalert2";
 
 const Cart = () => {
   const { pizzas, cart, setCart, show, handleClose, handleShow, handleClick } =
     useContext(CartContext);
 
   const { user } = useContext(TokenContext);
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
 
   const removeFromCart = (pizzaId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== pizzaId));
@@ -41,6 +54,44 @@ const Cart = () => {
   const calculateTotal = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
+
+  async function handleCart(e) {
+    e.preventDefault();
+
+    console.log("Usuario autenticado:", user);
+    console.log("Token enviado:", user?.token);
+
+    const response = await fetch("http://localhost:4000/api/checkouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        cart,
+        user,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("cart", JSON.stringify(data.cart));
+      setCart([]);
+      Toast.fire({
+        icon: "success",
+        title: data.message,
+        color: "white",
+        background: "#212529",
+      });
+    } else {
+      Toast.fire({
+        icon: "error",
+        title: data.error,
+        color: "white",
+        background: "#212529",
+      });
+    }
+  }
 
   return (
     <div className="cart pb-2">
@@ -167,7 +218,11 @@ const Cart = () => {
         >
           🍕 Total : ${calculateTotal().toLocaleString()}
         </h4>
-        <Button variant="outline-secondary" className={user ? "" : "disabled"}>
+        <Button
+          variant="outline-secondary"
+          className={user ? "" : "disabled"}
+          onClick={handleCart}
+        >
           {" "}
           💳 Pagar{" "}
         </Button>

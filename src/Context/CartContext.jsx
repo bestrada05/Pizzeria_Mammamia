@@ -9,6 +9,7 @@ const CartProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -77,6 +78,8 @@ const CartProvider = ({ children }) => {
         handleShow,
         handleClick,
         pizzasApi,
+        message,
+        setMessage,
       }}
     >
       {children}

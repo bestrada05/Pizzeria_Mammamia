@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { TokenContext } from "../Context/TokenContext";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../Context/CartContext";
 
 const Profile = () => {
-  const { setUser } = useContext(TokenContext);
+  const { user, setUser } = useContext(TokenContext);
+  const { setCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setUser(false);
+    setUser(null);
+    setCart([]);
     navigate("/Pizzeria_Mammamia/");
   };
 
@@ -15,8 +19,11 @@ const Profile = () => {
     <div className="login">
       <Container className="loginBox">
         <div>
-          <h5>Usuario:</h5>
-          <p>juanito@gmail.com</p>
+          {user ? (
+            <p>Email: {user.email}</p>
+          ) : (
+            <p>Ingresa a tu cuenta para ver tu Perfil</p>
+          )}
         </div>
         <Button className="m-4" onClick={handleLogout}>
           {" "}

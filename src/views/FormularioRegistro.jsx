@@ -6,103 +6,33 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-
-import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import { TokenContext } from "../Context/TokenContext";
+import { useNavigate } from "react-router-dom";
 
 const FormularioRegistro = () => {
   const {
-    mail,
-    setMail,
-    contrasena,
-    setContrasena,
-    envio,
-    setEnvio,
+    email,
+    setEmail,
+    password,
+    setPassword,
     validacion,
     setValidacion,
-    checkboxChecked,
-    setCheckboxChecked,
+    validarInput,
   } = useContext(TokenContext);
 
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    },
-  });
+  const navigate = useNavigate();
 
-  const validarInput = (e) => {
+  const envioFormularioRegistro = (e) => {
     e.preventDefault();
-
-    if (mail === "" || contrasena === "" || validacion === "") {
-      Swal.fire({
-        title: "Error",
-        text: "No pueden haber campos vacíos en el formulario",
-        icon: "error",
-        color: "white",
-        confirmButtonColor: "#f27474",
-        background: "#212529",
-        confirmButtonText: "Entiendo!",
-      });
-      return;
-    }
-    if (contrasena.length <= 6) {
-      Swal.fire({
-        title: "Error",
-        text: "La contraserña debe tener mínimo 6 caracteres",
-        icon: "error",
-        color: "white",
-        confirmButtonColor: "#f27474",
-        background: "#212529",
-        confirmButtonText: "Entiendo!",
-      }).then(() => {
-        window.location.reload();
-      });
-      return;
-    }
-    if (contrasena !== validacion) {
-      Swal.fire({
-        title: "Error",
-        text: "Las contraseñas deben coincidir",
-        icon: "error",
-        color: "white",
-        confirmButtonColor: "#f27474",
-        background: "#212529",
-        confirmButtonText: "Entiendo!",
-      });
-      return;
-    }
-    if (!checkboxChecked) {
-      Swal.fire({
-        title: "Error",
-        text: "Debes aceptar el registro en MammaMía",
-        icon: "error",
-        color: "white",
-        confirmButtonColor: "#f27474",
-        background: "#212529",
-        confirmButtonText: "Entiendo!",
-      });
-      return;
-    }
-
-    setEnvio(true);
-    setMail("");
-    setContrasena("");
-    setValidacion("");
-    setCheckboxChecked(false);
+    validarInput(e);
+    navigate("/Pizzeria_Mammamia/");
   };
 
   return (
     <div className="login">
       <Container className="loginBox">
         <Form
-          onSubmit={validarInput}
+          onSubmit={envioFormularioRegistro}
           className="d-flex flex-column align-items-center"
         >
           <h4 style={{ color: "white", textShadow: "0 0 10px #03bcf4" }}>
@@ -124,8 +54,8 @@ const FormularioRegistro = () => {
                 <Form.Control
                   type="email"
                   placeholder="Ingresa tu correo"
-                  value={mail}
-                  onChange={(e) => setMail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </OverlayTrigger>
             </Form.Group>
@@ -144,8 +74,8 @@ const FormularioRegistro = () => {
                 <Form.Control
                   type="password"
                   placeholder="Ingresa una contraseña"
-                  value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </OverlayTrigger>
             </Form.Group>
@@ -159,26 +89,6 @@ const FormularioRegistro = () => {
               />
             </Form.Group>
           </div>
-          <div>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                style={{ color: "white", textShadow: "0 0 10px #03bcf4" }}
-                type="checkbox"
-                name="checkbox"
-                label="Acepto el registro en MammaMía"
-                onChange={(e) => setCheckboxChecked(e.target.checked)}
-              />
-            </Form.Group>
-          </div>
-
-          {envio
-            ? Toast.fire({
-                icon: "success",
-                title: "Registro exitoso",
-                color: "white",
-                background: "#212529",
-              })
-            : null}
 
           <Button variant="primary" type="submit">
             Enviar
