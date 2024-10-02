@@ -19,3 +19,15 @@ Consumo de APIs con React
 # React - Hito 5
 
 React Router I
+
+# React - Hito 6
+
+Context
+
+# React - Hito 7
+
+React Router II
+
+# React - Hito 8
+
+JWT
